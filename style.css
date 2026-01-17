@@ -1,0 +1,41 @@
+html, body {
+  height: 100%;
+  background: #0e0e0e;
+}
+
+button {
+  color: rgba(255, 255, 255, 0.87);
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 2px;
+  background-color: #c2185b;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  cursor: pointer;
+}
+
+button:focus {
+  outline: none;
+}
+
+#view {
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  visibility: hidden;
+  opacity: 0;
+}
+
+#image {
+  position: absolute;
+}
+
+#controls {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 16px;
+  z-index: 10;
+}
