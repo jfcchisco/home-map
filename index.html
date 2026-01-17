@@ -11,13 +11,27 @@
 </head>
 <body>
     <div id="view">
-        <img id="image" width="3840" height="1200" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/106114/panoramic_cityscapes1.jpg"/>
+        <img id="image" width="3840" height="1200" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/106114/panoramic_cityscapes1.jpg" usemap="#homemap"/>
+        <map name="homemap">
+            <area shape="rect" coords="0,0,100,100" alt="Example Link" onclick="openModal()">
+        </map>
     </div>
 
     <div id="controls">
         <button id="reset">Reset</button>
     </div>
 
+    <div id="modal">
+        <div id="modal-content">
+            <h2>Modal Title</h2>
+            <p>This is the content of the modal.</p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+
+    </script>
     <script src="script.js"></script>
 </body>
 </html>

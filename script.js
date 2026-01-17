@@ -195,3 +195,11 @@ function resize() {
     viewWidth  = window.innerWidth;
     viewHeight = window.innerHeight;
 }
+
+function openModal() {
+    document.getElementById('modal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+}
