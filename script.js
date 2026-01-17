@@ -31,6 +31,8 @@ let pointer = {
 let initialDistance = 0;
 let initialScale = 1;
 let isPinching = false;
+let zoomOrigin = {x: 0, y: 0};
+let isModalOpen = false;
 
 let setX = gsap.quickSetter($image, "x", "px");
 let setY = gsap.quickSetter($image, "y", "px");
@@ -65,6 +67,8 @@ function init() {
     $image.addEventListener("touchstart", touchStart, {passive: false});
     $image.addEventListener("touchmove", touchMove, {passive: false});
     $image.addEventListener("touchend", touchEnd, {passive: false});
+    document.querySelector('map area').addEventListener('click', openModal);
+    document.querySelector('map area').addEventListener('touchend', openModal);
     gsap.ticker.add(updateZoom);
     gsap.set($view, { autoAlpha: 1 });
     
@@ -206,6 +210,8 @@ function touchStart(event) {
         let touch2 = event.touches[1];
         initialDistance = getDistance(touch1, touch2);
         initialScale = zoom.scale;
+        zoomOrigin.x = (touch1.clientX + touch2.clientX) / 2;
+        zoomOrigin.y = (touch1.clientY + touch2.clientY) / 2;
     }
 }
 
@@ -223,18 +229,15 @@ function touchMove(event) {
         setScaleX(newScale);
         setScaleY(newScale);
         
-        // Update pointer for zoom origin
-        pointer.x = (touch1.clientX + touch2.clientX) / 2;
-        pointer.y = (touch1.clientY + touch2.clientY) / 2;
-        
-        // Adjust position to zoom from pointer
+        // Zoom origin is fixed at the initial midpoint
+        // Adjust position to zoom from zoomOrigin
         let currentX = props("x");
         let currentY = props("y");
         let currentScale = props("scaleX");
-        let localX = (pointer.x - currentX) / currentScale;
-        let localY = (pointer.y - currentY) / currentScale;
-        let newX = pointer.x - localX * newScale;
-        let newY = pointer.y - localY * newScale;
+        let localX = (zoomOrigin.x - currentX) / currentScale;
+        let localY = (zoomOrigin.y - currentY) / currentScale;
+        let newX = zoomOrigin.x - localX * newScale;
+        let newY = zoomOrigin.y - localY * newScale;
         
         newX = gsap.utils.clamp(-(imageWidth * newScale), viewWidth, newX);
         newY = gsap.utils.clamp(-(imageHeight * newScale), viewHeight, newY);
@@ -263,10 +266,14 @@ function resize() {
 }
 
 function openModal() {
-    document.getElementById('modal').style.display = 'block';
+    if (!isModalOpen) {
+        document.getElementById('modal').style.display = 'block';
+        isModalOpen = true;
+    }
 }
 
 function closeModal() {
     document.getElementById('modal').style.display = 'none';
+    isModalOpen = false;
 }
 
