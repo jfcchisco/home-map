@@ -26,12 +26,11 @@ map {
 }
 
 #view {
-  position: absolute;
-  width: 513px;
-  height: 655px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
 }
 

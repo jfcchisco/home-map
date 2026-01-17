@@ -3,11 +3,7 @@ gsap.registerPlugin(Draggable, InertiaPlugin);
 let image = document.querySelector("#image");
 let container = document.querySelector("#view");
 
-let containerWidth  = 900;
-let containerHeight = 1600;
-
-let imageWidth  = 900;
-let imageHeight = 1600;
+let containerWidth, containerHeight, imageWidth, imageHeight;
 
 let zoom = {
     value: 1,
@@ -22,12 +18,38 @@ let initialZoom = 1;
 let isPinching = false;
 let zoomOrigin = {x: 0, y: 0};
 
-container.addEventListener("wheel", wheelAction);
 container.addEventListener("touchstart", touchStart, {passive: false});
 container.addEventListener("touchmove", touchMove, {passive: false});
 container.addEventListener("touchend", touchEnd);
 
-gsap.set(image, { scale: zoom.value, transformOrigin: "left top" });
+// Initialize dimensions
+let rect = container.getBoundingClientRect();
+containerWidth = rect.width;
+containerHeight = rect.height;
+
+imageWidth = image.naturalWidth || image.width;
+imageHeight = image.naturalHeight || image.height;
+
+// Set initial zoom based on viewport aspect
+let viewportAspect = containerWidth / containerHeight;
+let imageAspect = imageWidth / imageHeight; // 1.5
+
+if (viewportAspect > imageAspect) {
+    // Wide viewport, fit height to 100%
+    zoom.value = containerHeight / imageHeight;
+} else {
+    // Narrow viewport, fit width to 100%
+    zoom.value = containerWidth / imageWidth;
+}
+
+zoom.min = zoom.value;
+zoom.max = zoom.value * 5;
+
+// Center the image
+let x = (containerWidth - imageWidth * zoom.value) / 2;
+let y = (containerHeight - imageHeight * zoom.value) / 2;
+
+gsap.set(image, { scale: zoom.value, x: x, y: y, transformOrigin: "left top" });
 
 // var transform = image._gsTransform;
 let props = gsap.getProperty(image);
