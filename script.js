@@ -30,6 +30,7 @@ let pointer = {
 
 let initialDistance = 0;
 let initialScale = 1;
+let isPinching = false;
 
 let setX = gsap.quickSetter($image, "x", "px");
 let setY = gsap.quickSetter($image, "y", "px");
@@ -61,9 +62,9 @@ function init() {
     $view.addEventListener("mousewheel", mouseWheel);
     $view.addEventListener("DOMMouseScroll", mouseWheel);  
     window.addEventListener("resize", resize);
-    $view.addEventListener("touchstart", touchStart);
-    $view.addEventListener("touchmove", touchMove);
-    $view.addEventListener("touchend", touchEnd);
+    $image.addEventListener("touchstart", touchStart, {passive: false});
+    $image.addEventListener("touchmove", touchMove, {passive: false});
+    $image.addEventListener("touchend", touchEnd, {passive: false});
     gsap.ticker.add(updateZoom);
     gsap.set($view, { autoAlpha: 1 });
     
@@ -199,6 +200,7 @@ function resetView() {
 
 function touchStart(event) {
     if (event.touches.length === 2) {
+        isPinching = true;
         throwTween.kill();
         let touch1 = event.touches[0];
         let touch2 = event.touches[1];
@@ -221,7 +223,10 @@ function touchMove(event) {
 }
 
 function touchEnd(event) {
-    // Optional: handle end of touch
+    if (isPinching) {
+        zoom.chaseScale = zoom.scale;
+        isPinching = false;
+    }
 }
 
 function getDistance(touch1, touch2) {
