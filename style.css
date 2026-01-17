@@ -17,6 +17,10 @@ button:focus {
     outline: none;
 }
 
+map {
+    cursor: pointer;
+}
+
 #view {
     position: fixed;
     top: 0;
@@ -26,6 +30,7 @@ button:focus {
     height: 100vh;
     visibility: hidden;
     opacity: 0;
+    touch-action: none;
 }
 
 #image {

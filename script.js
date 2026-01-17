@@ -28,6 +28,9 @@ let pointer = {
     y: viewHeight / 2
 };
 
+let initialDistance = 0;
+let initialScale = 1;
+
 let setX = gsap.quickSetter($image, "x", "px");
 let setY = gsap.quickSetter($image, "y", "px");
 let setScaleX = gsap.quickSetter($image, "scaleX");
@@ -58,6 +61,9 @@ function init() {
     $view.addEventListener("mousewheel", mouseWheel);
     $view.addEventListener("DOMMouseScroll", mouseWheel);  
     window.addEventListener("resize", resize);
+    $view.addEventListener("touchstart", touchStart);
+    $view.addEventListener("touchmove", touchMove);
+    $view.addEventListener("touchend", touchEnd);
     gsap.ticker.add(updateZoom);
     gsap.set($view, { autoAlpha: 1 });
     
@@ -191,6 +197,39 @@ function resetView() {
     });  
 }
 
+function touchStart(event) {
+    if (event.touches.length === 2) {
+        throwTween.kill();
+        let touch1 = event.touches[0];
+        let touch2 = event.touches[1];
+        initialDistance = getDistance(touch1, touch2);
+        initialScale = zoom.scale;
+    }
+}
+
+function touchMove(event) {
+    if (event.touches.length === 2) {
+        event.preventDefault();
+        let touch1 = event.touches[0];
+        let touch2 = event.touches[1];
+        let newDistance = getDistance(touch1, touch2);
+        zoom.chaseScale = initialScale * (newDistance / initialDistance);
+        zoom.chaseScale = gsap.utils.clamp(zoom.min, zoom.max, zoom.chaseScale);
+        pointer.x = (touch1.clientX + touch2.clientX) / 2;
+        pointer.y = (touch1.clientY + touch2.clientY) / 2;
+    }
+}
+
+function touchEnd(event) {
+    // Optional: handle end of touch
+}
+
+function getDistance(touch1, touch2) {
+    let dx = touch1.clientX - touch2.clientX;
+    let dy = touch1.clientY - touch2.clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
 function resize() {
     viewWidth  = window.innerWidth;
     viewHeight = window.innerHeight;
@@ -203,3 +242,4 @@ function openModal() {
 function closeModal() {
     document.getElementById('modal').style.display = 'none';
 }
+
