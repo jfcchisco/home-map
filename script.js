@@ -93,7 +93,7 @@ function mouseWheel(event) {
 
 function updateZoom() {
   
-    if (resetTween.isActive()) {
+    if (resetTween.isActive() || isPinching) {
         return;
     }
   
@@ -215,10 +215,32 @@ function touchMove(event) {
         let touch1 = event.touches[0];
         let touch2 = event.touches[1];
         let newDistance = getDistance(touch1, touch2);
-        zoom.chaseScale = initialScale * (newDistance / initialDistance);
-        zoom.chaseScale = gsap.utils.clamp(zoom.min, zoom.max, zoom.chaseScale);
+        let newScale = initialScale * (newDistance / initialDistance);
+        newScale = gsap.utils.clamp(zoom.min, zoom.max, newScale);
+        
+        // Update scale directly during pinch
+        zoom.scale = newScale;
+        setScaleX(newScale);
+        setScaleY(newScale);
+        
+        // Update pointer for zoom origin
         pointer.x = (touch1.clientX + touch2.clientX) / 2;
         pointer.y = (touch1.clientY + touch2.clientY) / 2;
+        
+        // Adjust position to zoom from pointer
+        let currentX = props("x");
+        let currentY = props("y");
+        let currentScale = props("scaleX");
+        let localX = (pointer.x - currentX) / currentScale;
+        let localY = (pointer.y - currentY) / currentScale;
+        let newX = pointer.x - localX * newScale;
+        let newY = pointer.y - localY * newScale;
+        
+        newX = gsap.utils.clamp(-(imageWidth * newScale), viewWidth, newX);
+        newY = gsap.utils.clamp(-(imageHeight * newScale), viewHeight, newY);
+        
+        setX(newX);
+        setY(newY);
     }
 }
 
