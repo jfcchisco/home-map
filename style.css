@@ -3,6 +3,10 @@ html, body {
     background: #0e0e0e;
 }
 
+body {
+    overflow: hidden
+}
+
 button {
     color: rgba(255, 255, 255, 0.87);
     padding: 10px 16px;
@@ -22,15 +26,13 @@ map {
 }
 
 #view {
-    position: fixed;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    width: 100vw;
-    height: 100vh;
-    visibility: hidden;
-    opacity: 0;
-    touch-action: none;
+  position: absolute;
+  width: 513px;
+  height: 655px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
 }
 
 #image {
