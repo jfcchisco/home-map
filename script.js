@@ -33,6 +33,9 @@ let initialScale = 1;
 let isPinching = false;
 let zoomOrigin = {x: 0, y: 0};
 let isModalOpen = false;
+let hasDragged = false;
+let pressX = 0;
+let pressY = 0;
 
 let setX = gsap.quickSetter($image, "x", "px");
 let setY = gsap.quickSetter($image, "y", "px");
@@ -67,8 +70,7 @@ function init() {
     $image.addEventListener("touchstart", touchStart, {passive: false});
     $image.addEventListener("touchmove", touchMove, {passive: false});
     $image.addEventListener("touchend", touchEnd, {passive: false});
-    document.querySelector('map area').addEventListener('click', openModal);
-    document.querySelector('map area').addEventListener('touchend', openModal);
+
     gsap.ticker.add(updateZoom);
     gsap.set($view, { autoAlpha: 1 });
     
@@ -134,6 +136,7 @@ function updateZoom() {
 
 function onDrag() {
     
+    hasDragged = true;
     zoom.chaseX = this.x;
     zoom.chaseY = this.y;
 }
@@ -145,10 +148,18 @@ function onPress() {
     zoom.chaseX = this.x;
     zoom.chaseY = this.y;
     
+    hasDragged = false;
+    pressX = this.pointerEvent.clientX;
+    pressY = this.pointerEvent.clientY;
+    
     this.update();
 }
 
 function onRelease() {
+    
+    if (!hasDragged && isInArea(pressX, pressY)) {
+        openModal();
+    }
     
     throwTween = gsap.to(zoom, {      
         inertia: {
@@ -263,6 +274,16 @@ function getDistance(touch1, touch2) {
 function resize() {
     viewWidth  = window.innerWidth;
     viewHeight = window.innerHeight;
+}
+
+function isInArea(x, y) {
+    let rect = $image.getBoundingClientRect();
+    let scale = zoom.scale;
+    let areaX1 = rect.left + 0 * scale;
+    let areaY1 = rect.top + 0 * scale;
+    let areaX2 = rect.left + 500 * scale;
+    let areaY2 = rect.top + 500 * scale;
+    return x >= areaX1 && x <= areaX2 && y >= areaY1 && y <= areaY2;
 }
 
 function openModal() {
