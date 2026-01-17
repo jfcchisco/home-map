@@ -15,9 +15,12 @@ let zoom = {
 
 let initialDistance = 0;
 let initialZoom = 1;
+let initialX = 0;
+let initialY = 0;
 let isPinching = false;
 let zoomOrigin = {x: 0, y: 0};
 
+container.addEventListener("wheel", wheelAction);
 container.addEventListener("touchstart", touchStart, {passive: false});
 container.addEventListener("touchmove", touchMove, {passive: false});
 container.addEventListener("touchend", touchEnd);
@@ -41,7 +44,7 @@ if (viewportAspect > imageAspect) {
     // Narrow viewport, fit width to 100%
     zoom.value = containerWidth / imageWidth;
 }
-
+initialZoom = zoom.value;
 zoom.min = zoom.value;
 zoom.max = zoom.value * 5;
 
@@ -49,6 +52,8 @@ zoom.max = zoom.value * 5;
 let x = (containerWidth - imageWidth * zoom.value) / 2;
 let y = (containerHeight - imageHeight * zoom.value) / 2;
 
+initialX = x;
+initialY = y;
 gsap.set(image, { scale: zoom.value, x: x, y: y, transformOrigin: "left top" });
 
 // var transform = image._gsTransform;
@@ -126,11 +131,11 @@ let reset = document.querySelector("#reset");
 reset.addEventListener("click", resetZoom);
 
 function resetZoom() {
-    zoom.value = 1;
+    zoom.value = initialZoom;
     gsap.set(image, {
-        scale: 1,
-        x: 0,
-        y: 0
+        scale: initialZoom,
+        x: initialX,
+        y: initialY
     });
     setBounds();
 }
