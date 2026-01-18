@@ -8,7 +8,7 @@ let containerWidth, containerHeight, imageWidth, imageHeight;
 let zoom = {
     value: 1,
     min: 1,
-    max: 5,
+    max: 10,
     step: 1,  
     factor: 1.1
 };
@@ -213,4 +213,12 @@ function setBounds() {
         width: width,
         height: height
     });
+}
+
+function openModal() {
+    document.getElementById('modal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('modal').style.display = 'none';
 }
