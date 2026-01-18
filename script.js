@@ -61,7 +61,6 @@ let props = gsap.getProperty(image);
 
 let draggable = new Draggable(image, {
     cursor: "inherit",
-    onClick: onClick,
     inertia: true,
     minimumMovement: 10,
     // allowEventDefault: true,
@@ -140,19 +139,6 @@ function resetZoom() {
         y: initialY
     });
     setBounds();
-}
-
-function onClick(event) {
-  
-    let oldZoom = zoom.value;
-    
-    zoom.value = Math.floor((zoom.value + zoom.step) / zoom.step) * zoom.step;
-    
-    if (zoom.value > zoom.max) {
-        zoom.value = zoom.min;
-    }
-    
-    changeZoom(zoom.value - oldZoom, event);
 }
 
 function wheelAction(event) {
