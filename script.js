@@ -71,6 +71,7 @@ let draggable = new Draggable(image, {
 function touchStart(event) {
     if (event.touches.length === 2) {
         isPinching = true;
+        draggable.disable();
         let touch1 = event.touches[0];
         let touch2 = event.touches[1];
         initialDistance = getDistance(touch1, touch2);
@@ -118,6 +119,7 @@ function touchMove(event) {
 
 function touchEnd(event) {
     isPinching = false;
+    draggable.enable();
 }
 
 function getDistance(touch1, touch2) {
