@@ -25,15 +25,15 @@
      inkscape:document-units="mm"
      showgrid="false"
      units="px"
-     inkscape:zoom="0.46235269"
-     inkscape:cx="1164.6953"
-     inkscape:cy="882.44323"
-     inkscape:window-width="1920"
-     inkscape:window-height="1017"
-     inkscape:window-x="-1928"
-     inkscape:window-y="-312"
+     inkscape:zoom="0.11558817"
+     inkscape:cx="2002.8001"
+     inkscape:cy="1730.2808"
+     inkscape:window-width="1366"
+     inkscape:window-height="705"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer5" />
+     inkscape:current-layer="layer6" />
   <defs
      id="defs2">
     <clipPath
@@ -48,6 +48,18 @@
          y="87.403313" />
     </clipPath>
   </defs>
+  <g
+     inkscape:groupmode="layer"
+     id="layer6"
+     inkscape:label="Background">
+    <rect
+       style="fill:#ffffff;stroke:none;stroke-width:0.529167;fill-opacity:1"
+       id="rect858"
+       width="529.16669"
+       height="529.16669"
+       x="0.2645835"
+       y="0.2645835" />
+  </g>
   <g
      inkscape:label="Reference"
      inkscape:groupmode="layer"
