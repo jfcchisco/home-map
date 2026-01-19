@@ -26,12 +26,12 @@
      showgrid="false"
      units="px"
      inkscape:zoom="0.46235269"
-     inkscape:cx="1223.0923"
-     inkscape:cy="1148.4739"
-     inkscape:window-width="1366"
-     inkscape:window-height="705"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
+     inkscape:cx="1164.6953"
+     inkscape:cy="882.44323"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-1928"
+     inkscape:window-y="-312"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer5" />
   <defs
@@ -52,7 +52,7 @@
      inkscape:label="Reference"
      inkscape:groupmode="layer"
      id="layer1"
-     style="display:inline">
+     style="display:none">
     <image
        width="285.75"
        height="258.49792"
